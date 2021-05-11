@@ -22,14 +22,18 @@ stock void ManageConfigs()
 
 		ExplodeString(buffer, ";", split, sizeof(split), sizeof(split[]));
 
-		if(split[1][0] == '\0')
+		if(split[1][0] == '\0' || split[1][0] == '0')
 		{
 			if(FileExists(buffer))
 				AddFileToDownloadsTable(buffer);
 		} else {
-			if(FileExists(split[0]))
+			if(FileExists(split[0]) || split[1][0] == '2')
 			{
-				AddFileToDownloadsTable(split[0]);
+				if(split[1][0] == '1')
+				{
+					PrintToServer("[+] Adding to download table %s", split[0]);
+					AddFileToDownloadsTable(split[0]);
+				}
 
 				if(StrContains(buffer, "sound/", false) != -1)
 				{
