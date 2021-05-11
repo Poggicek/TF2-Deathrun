@@ -5,8 +5,7 @@ void PlayerConnect(int client)
 
 	g_players[client] = player;
 
-	SetClientLanguage(client, GetLanguageByCode("en"));
-	CPrintToChatAll("%t", "player serverjoin", _GetClientName(client));
+	//SetClientLanguage(client, GetLanguageByCode("en"));
 
 	int players = GetClientCount(true);
 
@@ -17,6 +16,7 @@ void PlayerConnect(int client)
 
 	// Hooks
 	SDKHook(client, SDKHook_PreThink, OnPlayerThink);
+	SDKHook(client, SDKHook_GetMaxHealth, OnGetMaxHealth);
 }
 
 void PlayerDisconnect(int client)
@@ -28,6 +28,7 @@ void PlayerDisconnect(int client)
 
 	// Hooks
 	SDKUnhook(client, SDKHook_PreThink, OnPlayerThink);
+	SDKUnhook(client, SDKHook_GetMaxHealth, OnGetMaxHealth);
 }
 
 
@@ -40,6 +41,12 @@ public void OnPlayerThink(int client)
 	{
 		NeutralizeClass(client);
 	}
+}
+
+public Action OnGetMaxHealth(int client, int &maxhealth)
+{
+	maxhealth = 150;
+	return Plugin_Changed;
 }
 
 void NeutralizeClass(int client)
