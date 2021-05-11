@@ -17,6 +17,7 @@
 #pragma newdecls required
 
 #include deathrun/globals.inc
+#include deathrun/configs.inc
 #include deathrun/tools.inc
 #include deathrun/timers.inc
 #include deathrun/player.inc
@@ -94,4 +95,7 @@ public void OnPluginEnd()
 public void OnMapStart()
 {
   SetConvars();
+
+  // KV Configs
+  ManageConfigs();
 }
