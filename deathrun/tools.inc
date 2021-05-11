@@ -69,3 +69,26 @@ stock void TF2_RestartRound()
   AcceptEntityInput(iEnt, "SetTeam");
   AcceptEntityInput(iEnt, "RoundWin");
 }
+
+stock void PickRandomDeath()
+{
+  for(int i = 0; i < 1000; i++)
+	{
+		int players = GetClientCount(true);
+		int randomPlayer = GetRandomInt(1, players);
+
+		if(players <= 1)
+		{
+			CPrintToChatAll("%s Not enough players! (At least 2)", TAG);
+			break;
+		}
+
+		if(randomPlayer != g_iDeath && IsValidPlayer(randomPlayer))
+		{
+			g_iDeath = randomPlayer;
+			ChangeClientTeam_Safe(randomPlayer, TEAM_BLUE);
+			CPrintToChatAll("%s %t", TAG, "select death",_GetClientName(randomPlayer));
+			break;
+		}
+	}
+}
