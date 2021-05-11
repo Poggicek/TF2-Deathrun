@@ -72,23 +72,47 @@ stock void TF2_RestartRound()
 
 stock void PickRandomDeath()
 {
-  for(int i = 0; i < 1000; i++)
-	{
-		int players = GetClientCount(true);
-		int randomPlayer = GetRandomInt(1, players);
 
-		if(players <= 1)
-		{
-			CPrintToChatAll("%s Not enough players! (At least 2)", TAG);
-			break;
-		}
+  int aClients[MAXPLAYERS + 1];
+  int players = 0;
 
-		if(randomPlayer != g_iDeath && IsValidPlayer(randomPlayer))
-		{
-			g_iDeath = randomPlayer;
-			ChangeClientTeam_Safe(randomPlayer, TEAM_BLUE);
-			CPrintToChatAll("%s %t", TAG, "select death",_GetClientName(randomPlayer));
-			break;
-		}
-	}
+  for(int i = 0; i < MAXPLAYERS + 1; i++)
+  {
+    if(IsValidPlayer(i) && g_iDeath != i && GetClientTeam(i) != TEAM_SPECTATOR)
+    {
+      aClients[players] = i;
+      players++;
+    }
+  }
+
+  int randomPlayer = GetRandomInt(0, players - 1);
+  int client = aClients[randomPlayer];
+
+  if(players < 1)
+  {
+    CPrintToChatAll("%s Not enough players! (At least 2)", TAG);
+    return;
+  }
+
+  if(IsValidPlayer(client))
+  {
+    g_iDeath = client;
+    if(TF2_GetPlayerClass(client) == TFClass_Unknown) TF2_SetPlayerClass(client, TFClass_Scout);
+
+    ChangeClientTeam_Safe(client, TEAM_BLUE);
+    CPrintToChatAll("%s %t", TAG, "select death", _GetClientName(client));
+    return;
+  } else {
+    PrintToChatAll("Invalid player!!");
+    return;
+  }
+}
+
+public bool TraceFilterNotSelf(int entityhit, int mask, any entity)
+{
+  if(entityhit >= 0 && entityhit != entity)
+  {
+    return true;
+  }
+  return false;
 }
