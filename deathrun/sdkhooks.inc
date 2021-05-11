@@ -126,3 +126,11 @@ public Action OnSuicide(int client, const char[] command, int args)
 {
 	return Plugin_Handled;
 }
+
+public Action OnSayMessage(int client, const char[] command, int argc)
+{
+	if(IsChatTrigger())
+		return Plugin_Handled;
+
+	return Plugin_Continue;
+}

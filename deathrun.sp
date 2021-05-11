@@ -51,6 +51,8 @@ public void OnPluginStart()
   AddCommandListener(OnPlayerJoinTeam, "changeteam");
   AddCommandListener(OnSuicide, "explode");
   AddCommandListener(OnSuicide, "kill");
+  AddCommandListener(OnSayMessage,"say");
+  AddCommandListener(OnSayMessage,"say_team");
 
   RegAdminCmd("sm_restart", RestartRound_Cmd, ADMFLAG_ROOT, "Restart round");
   RegConsoleCmd("sm_tp", ThirdPerson_Cmd, "Enable thirdperson");
