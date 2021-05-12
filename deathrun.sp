@@ -14,6 +14,7 @@
 #include <colorvariables>
 #include <smlib>
 #include <geoip>
+#include <clientprefs>
 #include lifeEnhancer/lifeEnhancer.sp
 
 #pragma newdecls required
@@ -21,6 +22,7 @@
 #include deathrun/globals.inc
 #include deathrun/configs.inc
 #include deathrun/tools.inc
+#include deathrun/menus.inc
 #include deathrun/timers.inc
 #include deathrun/player.inc
 #include deathrun/sdkhooks.inc
@@ -46,6 +48,8 @@ public void OnPluginStart()
     for(int i2 = 0; i2 < 4; i2++)
       g_aBreakables.Set(i, 0, i2);
   }
+
+  g_hLangCookie = RegClientCookie("client_language", "Sets client language", CookieAccess_Private);
 
   /*
     Event Hooks
@@ -80,6 +84,8 @@ public void OnPluginStart()
   RegAdminCmd("sm_restart", RestartRound_Cmd, ADMFLAG_ROOT, "Restart round");
   RegConsoleCmd("sm_tp", ThirdPerson_Cmd, "Enable thirdperson");
   RegConsoleCmd("sm_fp", FirstPerson_Cmd, "Disable thirdperson");
+  RegConsoleCmd("sm_lang", Language_Cmd, "Sets lanaguage");
+  RegConsoleCmd("sm_language", Language_Cmd, "Sets lanaguage");
   /*
     TIMERS
   */
@@ -152,4 +158,13 @@ public void OnMapStart()
 
   // KV Configs
   ManageConfigs();
+
+  g_fLastRoundStart = 0.0;
+  g_iDeath = -1;
+  g_freeRun = false;
+  for(int i = 0; i < GetMaxEntities(); i++)
+  {
+    for(int i2 = 0; i2 < 4; i2++)
+      g_aBreakables.Set(i, 0, i2);
+  }
 }

@@ -17,6 +17,14 @@ void PlayerConnect(int client)
 	// Hooks
 	SDKHook(client, SDKHook_PreThink, OnPlayerThink);
 	SDKHook(client, SDKHook_GetMaxHealth, OnGetMaxHealth);
+
+	char langCode[4];
+	GetClientCookie(client, g_hLangCookie, langCode, sizeof(langCode));
+
+	if(strlen(langCode) && GetLanguageByCode(langCode)>=0)
+	{
+		SetClientLanguage(client, GetLanguageByCode(langCode));
+	}
 }
 
 void PlayerDisconnect(int client)

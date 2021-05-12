@@ -16,3 +16,5 @@ float g_fMaxDeathSpeed = 400.0;
 float g_fLastRoundStart = 0.0;
 
 bool g_freeRun = false;
+
+Handle g_hLangCookie = INVALID_HANDLE;

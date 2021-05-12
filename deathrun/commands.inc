@@ -29,3 +29,13 @@ public Action FirstPerson_Cmd(int client, int args)
 
 	return Plugin_Handled;
 }
+
+public Action Language_Cmd(int client, int args)
+{
+	if(IsValidPlayer(client))
+	{
+		LanguageMenu(client);
+	}
+
+	return Plugin_Handled;
+}
