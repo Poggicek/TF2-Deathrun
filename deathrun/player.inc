@@ -17,6 +17,7 @@ void PlayerConnect(int client)
 	// Hooks
 	SDKHook(client, SDKHook_PreThink, OnPlayerThink);
 	SDKHook(client, SDKHook_GetMaxHealth, OnGetMaxHealth);
+	SDKHook(client, SDKHook_SetTransmit, Ghost_SetTransmit);
 
 	char langCode[4];
 	GetClientCookie(client, g_hLangCookie, langCode, sizeof(langCode));
@@ -37,6 +38,7 @@ void PlayerDisconnect(int client)
 	// Hooks
 	SDKUnhook(client, SDKHook_PreThink, OnPlayerThink);
 	SDKUnhook(client, SDKHook_GetMaxHealth, OnGetMaxHealth);
+	SDKUnhook(client, SDKHook_SetTransmit, Ghost_SetTransmit);
 }
 
 
@@ -48,6 +50,8 @@ public void OnPlayerThink(int client)
 	if(IsPlayerAlive(client))
 	{
 		NeutralizeClass(client);
+	} else if(g_iGhosts[client] == 2) {
+		SetEntPropFloat(client, Prop_Send, "m_flMaxspeed", 300.0);
 	}
 }
 

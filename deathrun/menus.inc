@@ -1,12 +1,5 @@
 public int LanguageMenu_Handler(Menu menu, MenuAction action, int client, int param2)
 {
-
-	if(!IsValidPlayer(client))
-	{
-		delete menu;
-		return 0;
-	}
-
 	char langCode[4];
 	int cLang = GetClientLanguage(client);
 	GetLanguageInfo(cLang, langCode, sizeof(langCode));
@@ -15,6 +8,11 @@ public int LanguageMenu_Handler(Menu menu, MenuAction action, int client, int pa
 	{
 		case MenuAction_Select:
 		{
+			if(!IsValidPlayer(client))
+			{
+				return 0;
+			}
+
 			char info[32];
 			menu.GetItem(param2, info, sizeof(info));
 
