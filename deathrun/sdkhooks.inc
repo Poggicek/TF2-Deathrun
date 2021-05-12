@@ -132,13 +132,13 @@ public Action OnSuicide(int client, const char[] command, int argc)
 
 public Action OnSayMessage(int client, const char[] command, int argc)
 {
-	if(IsChatTrigger())
-		return Plugin_Handled;
-
 	char args[10];
 	GetCmdArgString(args, sizeof(args));
 	StripQuotes(args);
 	TrimString(args);
+
+	if(args[0] == '!' || args[0] == '/')
+		return Plugin_Handled;
 
 	if(!IsValidPlayer(client, true)) return Plugin_Continue;
 
