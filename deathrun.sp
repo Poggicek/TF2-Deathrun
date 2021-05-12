@@ -28,6 +28,8 @@
 #include deathrun/sdkhooks.inc
 #include deathrun/commands.inc
 
+#include "dr/ghost.sp"
+
 public Plugin myinfo =
 {
   name = "Deathrun",
@@ -99,6 +101,8 @@ public void OnPluginStart()
           PlayerConnect(client);
       }
   }
+
+  Ghost_OnPluginStart();
 }
 
 public void OnEntityCreated(int entity, const char[] classname)
