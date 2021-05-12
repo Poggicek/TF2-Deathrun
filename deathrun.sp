@@ -15,6 +15,7 @@
 #include <smlib>
 #include <geoip>
 #include <clientprefs>
+#include <steamtools>
 #include lifeEnhancer/lifeEnhancer.sp
 
 #pragma newdecls required
@@ -171,4 +172,7 @@ public void OnMapStart()
     for(int i2 = 0; i2 < 4; i2++)
       g_aBreakables.Set(i, 0, i2);
   }
+
+  Steam_SetGameDescription("FunPlay DeathRun");
+  AddServerTag("deathrun");
 }
