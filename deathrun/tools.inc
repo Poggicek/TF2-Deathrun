@@ -116,3 +116,31 @@ public bool TraceFilterNotSelf(int entityhit, int mask, any entity)
   }
   return false;
 }
+
+stock TFClassType TF2_GetPlayerDesiredClass(int client)
+{
+	return view_as<TFClassType>(GetEntProp(client, Prop_Send, "m_iDesiredPlayerClass"));
+}
+
+stock void SetWearableInvis(int client, bool set = true)
+{
+	int i = -1;
+	int alpha = 100;
+	while ((i = FindEntityByClassname(i, "tf_wearable")) != -1)
+	{
+		if (GetEntPropEnt(i, Prop_Send, "m_hOwnerEntity") == client && !GetEntProp(i, Prop_Send, "m_bDisguiseWearable"))
+		{
+			SetEntityRenderMode(i, set ? RENDER_TRANSCOLOR : RENDER_NORMAL);
+			SetEntityRenderColor(i, _, _, _, set ? alpha : 255);
+		}
+	}
+	i = -1;
+	while ((i = FindEntityByClassname(i, "tf_wearable_demoshield")) != -1)
+	{
+		if (GetEntPropEnt(i, Prop_Send, "m_hOwnerEntity") == client && !GetEntProp(i, Prop_Send, "m_bDisguiseWearable"))
+		{
+			SetEntityRenderMode(i, set ? RENDER_TRANSCOLOR : RENDER_NORMAL);
+			SetEntityRenderColor(i, _, _, _, set ? alpha : 255);
+		}
+	}
+}
