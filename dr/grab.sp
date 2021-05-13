@@ -23,21 +23,26 @@ public Action Ghost_GrabStartCmd(int client, int args)
 		GetClientEyeAngles(client, ang);
 		GetClientEyePosition(client, pos);
 
-		TR_EnumerateEntities(pos, ang, PARTITION_NON_STATIC_EDICTS, RayType_Infinite, HitPlayer, client);
+		TR_EnumerateEntities(pos, ang, PARTITION_SOLID_EDICTS, RayType_Infinite, HitPlayer, client);
 	}
 }
 
 public bool HitPlayer(int entity, int client)
 {
-	if(entity != client && IsValidPlayer(client, true) && IsValidEdict(entity))
+	if(entity != client && IsValidPlayer(client, true))
 	{
 		if(IsValidPlayer(entity, true))
 		{
-			float dist = Entity_GetDistance(entity, client);
-			g_players[client].grabbing = EntIndexToEntRef(entity);
-			g_players[client].grabDistance = dist;
-			TF2_SetClientGlow(entity, true);
-			return false;
+			TR_ClipCurrentRayToEntity(MASK_ALL, entity);
+
+			if(TR_DidHit())
+			{
+				float dist = Entity_GetDistance(entity, client);
+				g_players[client].grabbing = EntIndexToEntRef(entity);
+				g_players[client].grabDistance = dist;
+				TF2_SetClientGlow(entity, true);
+				return false;
+			}
 		}
 	}
 
