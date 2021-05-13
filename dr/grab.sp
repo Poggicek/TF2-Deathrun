@@ -29,7 +29,7 @@ public Action Ghost_GrabStartCmd(int client, int args)
 
 public bool HitPlayer(int entity, int client)
 {
-	if(entity != client && IsValidPlayer(client, true))
+	if(entity != client && IsValidPlayer(client))
 	{
 		if(IsValidPlayer(entity, true))
 		{
