@@ -180,6 +180,6 @@ public void OnMapStart()
 
 public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3], float angles[3], int& weapon, int& subtype, int& cmdnum, int& tickcount, int& seed, int mouse[2])
 {
-	Grab_OnPlayerRunCmd(client, buttons);
+	Grab_OnPlayerRunCmd(client, buttons, mouse);
 	Ghost_OnPlayerRunCmd(client, buttons, impulse, vel, angles);
 }

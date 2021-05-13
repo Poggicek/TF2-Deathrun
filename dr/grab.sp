@@ -23,13 +23,13 @@ public Action Ghost_GrabStartCmd(int client, int args)
 		GetClientEyeAngles(client, ang);
 		GetClientEyePosition(client, pos);
 
-		TR_EnumerateEntities(pos, ang, PARTITION_SOLID_EDICTS, RayType_Infinite, HitPlayer, client);
+		TR_EnumerateEntities(pos, ang, PARTITION_NON_STATIC_EDICTS, RayType_Infinite, HitPlayer, client);
 	}
 }
 
 public bool HitPlayer(int entity, int client)
 {
-	if(entity != client && IsValidPlayer(client, true))
+	if(entity != client && IsValidPlayer(client, true) && IsValidEdict(entity))
 	{
 		if(IsValidPlayer(entity, true))
 		{
@@ -54,8 +54,9 @@ public Action Ghost_GrabEndCmd(int client, int args)
 			if(!IsValidPlayer(ent, true)) return Plugin_Handled;
 
 			TF2_SetClientGlow(ent, false);
-			g_players[client].grabbing = INVALID_ENT_REFERENCE;
 		}
+
+		g_players[client].grabbing = INVALID_ENT_REFERENCE;
 	}
 
 	return Plugin_Handled;
@@ -70,7 +71,7 @@ public bool TraceFilterGrab(int entityhit, int mask, any entity)
 	return false;
 }
 
-public void Grab_OnPlayerRunCmd(int client, int& buttons)
+public void Grab_OnPlayerRunCmd(int client, int& buttons, int mouse[2])
 {
 	if(!g_players[client].grabbing || g_players[client].grabbing == INVALID_ENT_REFERENCE) return;
 	if(!IsValidPlayer(client)) return;
@@ -89,7 +90,7 @@ public void Grab_OnPlayerRunCmd(int client, int& buttons)
 			g_players[client].grabDistance = 25.0;
 	}
 
-	float fAng[3], fPos[3], fForward[3];
+	float fAng[3], fPos[3], fForward[3], fVel[3], oldPos[3];
 	GetClientEyeAngles(client, fAng);
 	GetClientEyePosition(client, fPos);
 
@@ -98,5 +99,15 @@ public void Grab_OnPlayerRunCmd(int client, int& buttons)
 	AddVectors(fPos, fForward, fForward);
 	fForward[2] = fForward[2] - 35.0;
 
-	TeleportEntity(ent, fForward, NULL_VECTOR, view_as<float>({0.0, 0.0, 0.0}));
+	fVel = view_as<float>({0.0, 0.0, 0.0});
+	/*fVel[2] = mouse[1] * -100.0;
+	fVel[1] = mouse[0] * -100.0;
+	*/
+
+
+	Entity_GetAbsOrigin(ent, oldPos);
+	MakeVectorFromPoints(oldPos, fForward, fVel);
+	ScaleVector(fVel, 50.0);
+
+	TeleportEntity(ent, fForward, NULL_VECTOR, fVel);
 }
