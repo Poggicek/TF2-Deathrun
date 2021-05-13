@@ -24,6 +24,8 @@ GhostOptions g_ghostOptions[MAXPLAYERS + 1];
 
 void Ghost_OnPluginStart()
 {
+	PrintToServer("[+] Ghost module loaded");
+
 	HookEvent("player_death", Ghost_OnPlayerDeath);
 	HookEvent("player_changeclass", Ghost_OnPlayerClassChange);
 	HookEvent("player_spawn", Ghost_OnPlayerSpawn);
@@ -239,7 +241,7 @@ public Action Ghost_Cmd(int client, int args)
 }
 
 
-public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3], float angles[3], int& weapon, int& subtype, int& cmdnum, int& tickcount, int& seed, int mouse[2])
+public Action Ghost_OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3], float angles[3])
 {
 	if(buttons & IN_RELOAD && g_iGhosts[client] == 2)
 	{

@@ -144,3 +144,16 @@ stock void SetWearableInvis(int client, bool set = true)
 		}
 	}
 }
+stock int TF2_GetClientGlow(int client)	{
+	if(!IsValidPlayer(client))
+		ThrowError("Client index %d is invalid", client);
+
+	GetEntProp(client, Prop_Send, "m_bGlowEnabled");
+}
+
+stock void TF2_SetClientGlow(int client, int value=1)	{
+	if(!IsValidPlayer(client, true))
+		ThrowError("Client index %d is invalid", client);
+
+	SetEntProp(client, Prop_Send, "m_bGlowEnabled", value);
+}

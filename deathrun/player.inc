@@ -31,6 +31,8 @@ void PlayerConnect(int client)
 void PlayerDisconnect(int client)
 {
 	Player player;
+	player.grabbing = INVALID_ENT_REFERENCE;
+
 	g_players[client] = player;
 
 	CPrintToChatAll("%t", "player serverleave", _GetClientName(client));
@@ -63,8 +65,6 @@ public Action OnGetMaxHealth(int client, int &maxhealth)
 
 void NeutralizeClass(int client)
 {
-
-	//PrintToChatAll("THINK");
 	if(GetClientTeam(client) != TEAM_SPECTATOR)
 		SetEntPropFloat(client, Prop_Send, "m_flMaxspeed", GetClientTeam(client) == TEAM_RED ? g_fMaxRunnerSpeed : g_fMaxDeathSpeed);
 

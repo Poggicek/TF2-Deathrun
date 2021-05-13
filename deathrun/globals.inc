@@ -4,6 +4,8 @@ enum struct Player {
   int id;
 
   bool thirdperson;
+  int grabbing;
+  float grabDistance;
 }
 
 Player g_players[MAXPLAYERS + 1];

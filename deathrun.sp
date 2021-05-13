@@ -30,6 +30,7 @@
 #include deathrun/commands.inc
 
 #include "dr/ghost.sp"
+#include "dr/grab.sp"
 
 public Plugin myinfo =
 {
@@ -53,7 +54,6 @@ public void OnPluginStart()
   }
 
   g_hLangCookie = RegClientCookie("client_language", "Sets client language", CookieAccess_Private);
-
   /*
     Event Hooks
   */
@@ -104,6 +104,7 @@ public void OnPluginStart()
   }
 
   Ghost_OnPluginStart();
+  Grab_OnPluginStart();
 }
 
 public void OnEntityCreated(int entity, const char[] classname)
@@ -175,4 +176,10 @@ public void OnMapStart()
 
   Steam_SetGameDescription("FunPlay DeathRun");
   AddServerTag("deathrun");
+}
+
+public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3], float angles[3], int& weapon, int& subtype, int& cmdnum, int& tickcount, int& seed, int mouse[2])
+{
+	Grab_OnPlayerRunCmd(client, buttons);
+	Ghost_OnPlayerRunCmd(client, buttons, impulse, vel, angles);
 }
