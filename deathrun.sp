@@ -31,6 +31,7 @@
 
 #include "dr/ghost.sp"
 #include "dr/grab.sp"
+#include "dr/adminmenu.sp"
 
 public Plugin myinfo =
 {
@@ -105,6 +106,7 @@ public void OnPluginStart()
 
   Ghost_OnPluginStart();
   Grab_OnPluginStart();
+  AdminMenu_OnPluginStart();
 }
 
 public void OnEntityCreated(int entity, const char[] classname)
