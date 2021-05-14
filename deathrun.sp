@@ -184,6 +184,17 @@ public void OnMapStart()
 
 public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3], float angles[3], int& weapon, int& subtype, int& cmdnum, int& tickcount, int& seed, int mouse[2])
 {
-	Grab_OnPlayerRunCmd(client, buttons, mouse);
-	Ghost_OnPlayerRunCmd(client, buttons, impulse, vel, angles);
+  Grab_OnPlayerRunCmd(client, buttons, mouse);
+  Ghost_OnPlayerRunCmd(client, buttons, impulse, vel, angles);
+
+  if(g_specialRound == SPECIALROUND_BHOP)
+  {
+    if(IsValidPlayer(client) && (GetEntityFlags(client) & FL_ONGROUND) && (buttons & IN_JUMP))
+    {
+      float fVel[3];
+      Entity_GetLocalVelocity(client, fVel);
+      fVel[2] = 267.0;
+      TeleportEntity(client, NULL_VECTOR, NULL_VECTOR, fVel);
+    }
+  }
 }

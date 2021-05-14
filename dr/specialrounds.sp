@@ -9,7 +9,8 @@ char SR_Names[][] = {
 	"specialround none",
 	"specialround longrespawn",
 	"specialround highspeed",
-	"specialround smallplayer"
+	"specialround smallplayer",
+	"specialround bhop",
 };
 
 public void SpecialRounds_OnPluginStart()
@@ -19,9 +20,9 @@ public void SpecialRounds_OnPluginStart()
 
 public Action SpecialRounds_RoundStart(Handle event, const char[] name, bool dontBroadcast)
 {
-	if(GetRandomInt(0, 7) == 0)
+	if(GetRandomInt(0, 8) == 0)
 	{
-		g_specialRound = view_as<SpecialRound>(GetRandomInt(1, 4 - 1));
+		g_specialRound = view_as<SpecialRound>(GetRandomInt(1, 5 - 1));
 		CPrintToChatAll("%s %t", TAG, SR_Names[view_as<int>(g_specialRound)]);
 
 		switch(g_specialRound)
