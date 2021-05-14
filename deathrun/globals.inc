@@ -17,6 +17,7 @@ enum SpecialRound {
 }
 
 SpecialRound g_specialRound = SPECIALROUND_NONE;
+bool g_forcedSpecialRound = false;
 
 Player g_players[MAXPLAYERS + 1];
 ArrayList g_aBreakables;
