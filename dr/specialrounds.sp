@@ -36,7 +36,7 @@ public Action SpecialRounds_RoundStart(Handle event, const char[] name, bool don
 {
 	g_specialRound = SPECIALROUND_NONE;
 
-	if(GetRandomInt(0, 8) == 0 || g_forcedSpecialRound)
+	if(GetRandomInt(0, 10) == 0 || g_forcedSpecialRound)
 	{
 		g_forcedSpecialRound = false;
 		g_specialRound = view_as<SpecialRound>(GetRandomInt(1, 5 - 1));
