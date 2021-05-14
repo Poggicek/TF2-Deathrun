@@ -66,7 +66,7 @@ public Action OnGetMaxHealth(int client, int &maxhealth)
 void NeutralizeClass(int client)
 {
 	if(GetClientTeam(client) != TEAM_SPECTATOR)
-		SetEntPropFloat(client, Prop_Send, "m_flMaxspeed", GetClientTeam(client) == TEAM_RED ? g_fMaxRunnerSpeed : g_fMaxDeathSpeed);
+		SetEntPropFloat(client, Prop_Send, "m_flMaxspeed", GetClientTeam(client) == TEAM_RED ? (g_specialRound == SPECIALROUND_HIGH_SPEED ? g_fMaxRunnerSpeedSpecialRound : g_fMaxRunnerSpeed) : g_fMaxDeathSpeed);
 
 	if(TF2_GetPlayerClass(client) == TFClass_Spy)
 		SetCloak(client, 1.0);
