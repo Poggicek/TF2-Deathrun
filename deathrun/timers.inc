@@ -15,7 +15,7 @@ public Action TimerPlayerSpawn(Handle timer, int client)
 		AcceptEntityInput(client, "SetForcedTauntCam");
 	}
 
-	if(!GetClientTeam(client) != TEAM_RED && g_specialRound == SPECIALROUND_SMALL_PLAYER) {
+	if(GetClientTeam(client) != TEAM_RED && g_specialRound == SPECIALROUND_SMALL_PLAYER) {
 		SetEntPropFloat(client, Prop_Send, "m_flModelScale", 0.7);
 		SetEntPropFloat(client, Prop_Send, "m_flStepSize", 0.7 * 18);
 	}

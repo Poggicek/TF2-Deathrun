@@ -75,6 +75,14 @@ public Action Ghost_OnPlayerDeath(Event event, const char[] name, bool dontBroad
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
 	if(!IsValidPlayer(client)) return Plugin_Continue;
+
+	if(g_specialRound == SPECIALROUND_LONG_RESPAWN && g_fLastRoundStart + 30 > GetEngineTime())
+	{
+		CPrintToChat(client, "%s %t", TAG, "respawn remaining", RoundFloat(g_fLastRoundStart + 30 - GetEngineTime()));
+		CreateTimer(0.4, GhostTimer_Respawn, GetClientUserId(client));
+		return Plugin_Continue;
+	}
+
 	if((GameRules_GetRoundState() != RoundState_RoundRunning && GameRules_GetRoundState() != RoundState_Stalemate)) return Plugin_Continue;
 	if(!CanBeGhost(client)) return Plugin_Continue;
 	if(TF2_GetPlayerDesiredClass(client) == TFClass_Unknown) return Plugin_Continue;
